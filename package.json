@@ -1,0 +1,39 @@
+{
+  "name": "image-lambda-api",
+  "version": "2.0.0",
+  "description": "Lambda that gets and deletes images",
+  "main": "dist/upload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "config:check": "ts-node -e \"import('./src/utils/config-checker').then(m => m.checkConfiguration())\"",
+    "build": "tsc",
+    "start": "node dist/upload.js",
+    "dev": "ts-node upload.ts",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "build:lambda": "tsc && cp package.json dist/ && cd dist && npm install --production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reworthrewards/image-lambda-api.git"
+  },
+  "author": "axel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reworthrewards/image-lambda-api/issues"
+  },
+  "homepage": "https://github.com/reworthrewards/image-lambda-api#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
+    "@aws-sdk/s3-request-presigner": "^3.0.0",
+    "@sentry/node": "^7.120.3",
+    "dotenv": "^16.6.1",
+    "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.9",
+    "nodemon": "^3.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}

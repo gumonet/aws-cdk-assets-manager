@@ -1,0 +1,9 @@
+.env
+node_modules
+
+*.jpg
+*.jpeg
+.idea
+*.zip
+.vscode
+deploy.sh
