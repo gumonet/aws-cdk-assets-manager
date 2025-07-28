@@ -17,11 +17,10 @@ Este proyecto implementa una API serverless completa para el procesamiento y alm
 
 El proyecto utiliza una arquitectura de microservicios serverless donde cada componente tiene una responsabilidad específica:
 
-- **API Gateway**: Maneja las peticiones HTTP y autenticación
+- **API Gateway**: Maneja las peticiones HTTP
 - **Lambda Functions**: Procesan la lógica de negocio (upload y process)
 - **S3**: Almacena las imágenes originales y procesadas
 - **CloudFront**: Distribuye el contenido globalmente
-- **CloudWatch**: Monitorea y registra logs
 
 ## 🏗️ Arquitectura
 
@@ -87,7 +86,7 @@ URL=https://your-domain.com
 
 ```bash
 git clone <your-repo-url>
-cd api-image-processor
+cd aws-cdk-assets-manager
 npm install
 ```
 
@@ -346,51 +345,6 @@ infra/                  # Stack de infraestructura
 - **Funcionalidad**: Procesa imágenes y crea diferentes tamaños
 - **Entrada**: Eventos de S3
 - **Salida**: Imágenes procesadas en S3
-
-## 🔄 Migración de AWS SDK v2 a v3
-
-El proyecto ha sido migrado completamente a AWS SDK v3, que ofrece:
-
-- **Mejor rendimiento** - Bundle más pequeño
-- **Tipado nativo** - Mejor soporte TypeScript
-- **Modular** - Solo importar lo que necesitas
-- **Promesas nativas** - Sin necesidad de `.promise()`
-
-### Cambios principales:
-
-```typescript
-// Antes (AWS SDK v2)
-const s3 = new AWS.S3();
-const result = await s3.getObject(params).promise();
-
-// Ahora (AWS SDK v3)
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-const client = new S3Client({ region: "us-east-1" });
-const command = new GetObjectCommand(params);
-const result = await client.send(command);
-```
-
-## 📊 Monitoreo y Logs
-
-### CloudWatch Logs
-
-- **Logs de CloudFront**: Automáticamente enviados a CloudWatch
-- **Logs de Lambda**: Monitoreo de funciones upload y process
-- **Retención**: 7 días en desarrollo, 30 días en producción
-
-### Métricas Disponibles
-
-- **Requests por minuto**
-- **Tiempo de respuesta**
-- **Errores 4xx/5xx**
-- **Cache hit/miss ratio**
-
-## 🔧 Configuración de Infraestructura
-
-### CloudFront Routing:
-
-- **`/api/*`** → API Gateway (CRUD de imágenes)
-- **`/*`** → S3 Bucket (servir imágenes)
 
 ### Dominio Personalizado:
 
